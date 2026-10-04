@@ -1,6 +1,6 @@
 # 极速狂飙 Turbo Rush
 
-一款基于 **Three.js** 的 3D 街机赛车游戏 —— 软件工程课程期末大作业。
+一款基于 **Three.js** 的 3D 街机赛车游戏 。
 
 > 🎮 **在线试玩**：https://zhujiansheyuzhou.github.io/turbo-rush/
 
