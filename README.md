@@ -2,6 +2,8 @@
 
 一款基于 **Three.js** 的 3D 街机赛车游戏 —— 软件工程课程期末大作业。
 
+> 🎮 **在线试玩**：https://zhujiansheyuzhou.github.io/turbo-rush/
+
 ![Tech](https://img.shields.io/badge/Three.js-r147-blue) ![Platform](https://img.shields.io/badge/platform-Web-green) ![NoBuild](https://img.shields.io/badge/build-零依赖-orange)
 
 ## 功能特性
