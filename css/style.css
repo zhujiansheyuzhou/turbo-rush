@@ -1,0 +1,248 @@
+/* =========================================================
+   极速狂飙 Turbo Rush —— 界面样式
+   深蓝竞技风 + 橙色点缀；HUD 半透明悬浮，菜单居中面板
+   ========================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+  background: #0b1526;
+  color: #fff;
+  user-select: none;
+}
+
+#game-container, #game-container canvas { position: absolute; inset: 0; }
+
+/* 电影感暗角 */
+#vignette {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 5;
+  background: radial-gradient(ellipse at center,
+    transparent 52%, rgba(2, 6, 14, 0.34) 100%);
+}
+
+.hidden { display: none !important; }
+
+/* ---------------- 覆盖层与面板 ---------------- */
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, rgba(8, 16, 30, 0.62), rgba(5, 10, 20, 0.78));
+  backdrop-filter: blur(3px);
+  z-index: 20;
+}
+
+.panel {
+  background: linear-gradient(160deg, #14263f 0%, #0d1a2e 100%);
+  border: 1px solid rgba(255, 150, 50, 0.35);
+  border-radius: 14px;
+  padding: 34px 44px;
+  text-align: center;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+  max-width: 860px;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.panel h2 {
+  font-size: 26px; letter-spacing: 6px; margin-bottom: 22px;
+  color: #ffb84d;
+}
+
+/* ---------------- 标题 ---------------- */
+.game-title {
+  font-size: 64px; font-style: italic; font-weight: 900;
+  letter-spacing: 10px;
+  background: linear-gradient(180deg, #ffe27a, #ff9a2e 55%, #ff6a10);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(255, 140, 30, 0.45));
+  animation: titleGlow 2.6s ease-in-out infinite;
+}
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 4px 14px rgba(255, 140, 30, 0.35)); }
+  50% { filter: drop-shadow(0 4px 26px rgba(255, 170, 50, 0.65)); }
+}
+.game-subtitle {
+  font-size: 18px; letter-spacing: 14px; color: #7fa8d0;
+  margin: 6px 0 34px;
+}
+.title-panel .btn { display: block; margin: 12px auto; width: 240px; }
+
+/* ---------------- 按钮 ---------------- */
+.btn {
+  font-size: 17px; letter-spacing: 3px;
+  padding: 12px 34px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-1px); }
+.btn.primary {
+  background: linear-gradient(180deg, #ff9a2e, #f26d0d);
+  border-color: #ffb84d;
+  font-weight: 700;
+}
+.btn.primary:hover { filter: brightness(1.12); }
+.btn.small { font-size: 14px; padding: 9px 24px; }
+.btn-row { margin-top: 24px; display: flex; gap: 14px; justify-content: center; }
+.btn-col { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.btn-col .btn { width: 220px; }
+
+/* ---------------- 卡片 ---------------- */
+.cards-row { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+.mode-cards { display: flex; gap: 22px; justify-content: center; margin-bottom: 8px; }
+
+.card {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.card:hover { border-color: rgba(255, 184, 77, 0.6); transform: translateY(-3px); }
+.card.sel { border-color: #ff9a2e; box-shadow: 0 0 18px rgba(255, 154, 46, 0.35); }
+.card h3 { margin: 10px 0 6px; font-size: 18px; }
+.card p { font-size: 13px; color: #a9c0da; line-height: 1.5; }
+.card canvas { border-radius: 6px; display: block; margin: 0 auto; }
+.mode-card { width: 260px; padding: 28px 18px; }
+.mode-card h3 { font-size: 22px; }
+
+.car-swatch { width: 100%; height: 54px; border-radius: 6px; }
+
+.stat { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 12px; color: #a9c0da; }
+.stat span { width: 34px; text-align: right; }
+.stat .bar { flex: 1; height: 8px; background: rgba(255, 255, 255, 0.12); border-radius: 4px; overflow: hidden; }
+.stat .bar div { height: 100%; background: linear-gradient(90deg, #ff9a2e, #ffd34d); border-radius: 4px; }
+
+/* ---------------- 帮助 ---------------- */
+.help-table { margin: 0 auto 16px; border-collapse: collapse; }
+.help-table td { padding: 7px 18px; font-size: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.help-table .key { color: #ffd34d; font-weight: 700; text-align: right; }
+.help-tip { font-size: 13px; color: #a9c0da; max-width: 460px; margin: 0 auto 18px; line-height: 1.7; }
+
+/* ---------------- HUD ---------------- */
+#hud { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+#hud > div { position: absolute; }
+
+#hud-topleft { top: 18px; left: 22px; }
+#hud-pos {
+  font-size: 52px; font-weight: 900; font-style: italic;
+  color: #ffd34d; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+#hud-pos small { font-size: 22px; color: #fff; }
+
+#hud-topcenter { top: 16px; left: 50%; transform: translateX(-50%); text-align: center; }
+#hud-lap { font-size: 22px; font-weight: 700; letter-spacing: 2px; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+#hud-time { font-size: 16px; color: #cfe2f5; margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+#hud-map {
+  top: 18px; right: 22px;
+  background: rgba(8, 18, 34, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  border-radius: 10px; padding: 6px;
+}
+
+#hud-bottomleft { left: 22px; bottom: 20px; }
+.nitro-label { font-size: 13px; color: #cfe2f5; margin-bottom: 5px; letter-spacing: 1px; }
+.key-hint { background: rgba(255,255,255,0.15); border-radius: 4px; padding: 1px 6px; font-size: 11px; }
+#hud-nitro {
+  width: 210px; height: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 7px; overflow: hidden;
+}
+#nitro-fill {
+  height: 100%; width: 70%;
+  background: linear-gradient(90deg, #2e9df2, #6ee7ff);
+  box-shadow: 0 0 10px rgba(110, 231, 255, 0.55);
+  transition: width 0.1s linear;
+}
+#nitro-fill.boosting {
+  background: linear-gradient(90deg, #ff9a2e, #ffd34d);
+  box-shadow: 0 0 12px rgba(255, 180, 60, 0.7);
+}
+#hud-laptimes {
+  margin-top: 10px; font-size: 13px; color: #cfe2f5;
+  line-height: 1.6; font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+}
+
+#hud-speed {
+  right: 26px; bottom: 18px;
+  font-weight: 900; font-style: italic;
+  color: #fff;
+  text-shadow:
+    0 0 22px rgba(120, 190, 255, 0.35),
+    0 3px 12px rgba(0, 0, 0, 0.65);
+}
+#speed-num { font-size: 74px; }
+#hud-speed small { font-size: 18px; margin-left: 8px; color: #ffd34d; }
+
+#hud-msg {
+  top: 26%; left: 50%; transform: translateX(-50%);
+  font-size: 64px; font-weight: 900; font-style: italic;
+  letter-spacing: 6px;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+.msg-anim { animation: msgpop 1.5s ease-out; }
+@keyframes msgpop {
+  0% { transform: translateX(-50%) scale(0.4); opacity: 0; }
+  18% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+  30% { transform: translateX(-50%) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+#hud-keys-hint {
+  bottom: 6px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: rgba(255, 255, 255, 0.45); letter-spacing: 1px;
+}
+
+/* ---------------- 双人分屏 ---------------- */
+#hud-p2 {
+  left: 22px; bottom: 16px;
+  display: flex; gap: 16px; align-items: baseline;
+  font-size: 15px; color: #cfe2f5;
+  background: rgba(8, 18, 34, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px; padding: 8px 14px;
+  backdrop-filter: blur(4px);
+  font-variant-numeric: tabular-nums;
+}
+#hud-p2 .p2-tag {
+  color: #6ee7ff; font-weight: 900; font-style: italic; font-size: 18px;
+}
+#hud-p2 #p2-pos {
+  font-weight: 900; font-style: italic; color: #ffd34d; font-size: 20px;
+}
+#hud-p2 #p2-pos small { font-size: 12px; color: #fff; }
+#hud-p2 #p2-speed small { font-size: 11px; color: #ffd34d; }
+
+/* 分屏时：P1 的 HUD 上移让出下半屏 */
+#hud.split #hud-speed { bottom: 52%; }
+#hud.split #hud-bottomleft { bottom: 52%; }
+#hud.split #hud-map { transform: scale(0.78); transform-origin: top right; }
+#hud.split #hud-keys-hint { display: none; }
+
+/* ---------------- 结算 ---------------- */
+#results-body table { margin: 0 auto; border-collapse: collapse; min-width: 480px; }
+#results-body th, #results-body td {
+  padding: 9px 16px; font-size: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#results-body th { color: #ffb84d; font-size: 13px; letter-spacing: 2px; }
+#results-body tr.hl td { color: #ffd34d; font-weight: 700; }
+.big-best { font-size: 26px; color: #ffd34d; font-weight: 700; margin-bottom: 10px; }
+.record { color: #7dff5a; font-weight: 700; margin-top: 8px; }
+#results-body p { margin: 6px 0; font-variant-numeric: tabular-nums; }

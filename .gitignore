@@ -1,0 +1,12 @@
+# WorkBuddy 项目数据（本机开发/测试环境，不上传）
+.workbuddy/
+
+# 依赖与系统文件
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 测试调试输出（生成的中间文件）
+test/*.txt

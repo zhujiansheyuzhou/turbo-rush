@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>极速狂飙 Turbo Rush</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 3D 画布容器 -->
+<div id="game-container"></div>
+
+<!-- 电影感暗角（纯装饰） -->
+<div id="vignette"></div>
+
+<!-- ============ 比赛 HUD ============ -->
+<div id="hud" class="hidden">
+  <div id="hud-topleft"><div id="hud-pos">1<small>/4</small></div></div>
+  <div id="hud-topcenter">
+    <div id="hud-lap">第 1 / 3 圈</div>
+    <div id="hud-time">0:00.000</div>
+  </div>
+  <div id="hud-map"><canvas id="minimap" width="170" height="170"></canvas></div>
+  <div id="hud-bottomleft">
+    <div class="nitro-label">氮气 <span class="key-hint">Shift</span></div>
+    <div id="hud-nitro"><div id="nitro-fill"></div></div>
+    <div id="hud-laptimes">本圈 --:--.---</div>
+  </div>
+  <div id="hud-speed"><span id="speed-num">0</span><small>km/h</small></div>
+  <div id="hud-p2" class="hidden">
+    <span class="p2-tag">P2</span>
+    <span id="p2-pos">-</span>
+    <span id="p2-lap"></span>
+    <span id="p2-speed"></span>
+  </div>
+  <div id="hud-msg"></div>
+  <div id="hud-keys-hint">WASD 驾驶 · 空格 漂移 · Shift 氮气 · R 重置 · C 视角 · Esc 暂停 · M 静音</div>
+</div>
+
+<!-- ============ 菜单：标题 ============ -->
+<div id="menu-title" class="overlay">
+  <div class="panel title-panel">
+    <h1 class="game-title">极速狂飙</h1>
+    <div class="game-subtitle">TURBO&nbsp;RUSH</div>
+    <button id="btn-start" class="btn primary">开始游戏</button>
+    <button id="btn-help" class="btn">操作说明</button>
+  </div>
+</div>
+
+<!-- ============ 菜单：模式选择 ============ -->
+<div id="menu-mode" class="overlay hidden">
+  <div class="panel">
+    <h2>选择模式</h2>
+    <div class="mode-cards">
+      <div class="card mode-card" id="btn-mode-race">
+        <h3>🏁 竞速赛</h3>
+        <p>与 7 名 AI 车手同场竞技<br>8 车 3 圈定胜负</p>
+      </div>
+      <div class="card mode-card" id="btn-mode-time">
+        <h3>⏱ 单人计时</h3>
+        <p>单人模式 · 独自挑战赛道<br>刷新你的最佳圈速纪录</p>
+      </div>
+      <div class="card mode-card" id="btn-mode-duel">
+        <h3>👥 双人对战</h3>
+        <p>同屏上下分屏对决<br>P1: WASD + 空格 + 左Shift<br>P2: 方向键 + Enter + 右Shift</p>
+      </div>
+    </div>
+    <button id="btn-mode-back" class="btn small">返回</button>
+  </div>
+</div>
+
+<!-- ============ 菜单：赛道选择 ============ -->
+<div id="menu-track" class="overlay hidden">
+  <div class="panel">
+    <h2>选择赛道</h2>
+    <div id="track-cards" class="cards-row"></div>
+    <div class="btn-row">
+      <button id="btn-track-back" class="btn small">返回</button>
+      <button id="btn-track-next" class="btn primary">下一步</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 菜单：车辆选择 ============ -->
+<div id="menu-car" class="overlay hidden">
+  <div class="panel">
+    <h2>选择赛车</h2>
+    <div id="car-cards" class="cards-row"></div>
+    <div class="btn-row">
+      <button id="btn-car-back" class="btn small">返回</button>
+      <button id="btn-race-start" class="btn primary">开赛！</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 菜单：操作说明 ============ -->
+<div id="menu-help" class="overlay hidden">
+  <div class="panel">
+    <h2>操作说明</h2>
+    <table id="help-keys" class="help-table"></table>
+    <p class="help-tip">技巧：入弯前松油门或轻点刹车，按住空格+方向即可漂移过弯；漂移能快速积攒氮气，出弯后按 Shift 喷射！</p>
+    <button id="btn-help-back" class="btn small">返回</button>
+  </div>
+</div>
+
+<!-- ============ 结算面板 ============ -->
+<div id="results" class="overlay hidden">
+  <div class="panel">
+    <h2 id="results-title">完赛</h2>
+    <div id="results-body"></div>
+    <div class="btn-row">
+      <button id="btn-retry" class="btn primary">再来一局</button>
+      <button id="btn-results-menu" class="btn">返回主菜单</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 暂停面板 ============ -->
+<div id="pause" class="overlay hidden">
+  <div class="panel">
+    <h2>已暂停</h2>
+    <div class="btn-col">
+      <button id="btn-resume" class="btn primary">继续比赛</button>
+      <button id="btn-pause-retry" class="btn">重新开始</button>
+      <button id="btn-pause-menu" class="btn">返回主菜单</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 脚本（经典脚本，顺序加载） ============ -->
+<script src="lib/three.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/config.js"></script>
+<script src="js/trackdata.js"></script>
+<script src="js/physics.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/racecore.js"></script>
+<script src="js/input.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/track.js"></script>
+<script src="js/car.js"></script>
+<script src="js/hud.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
